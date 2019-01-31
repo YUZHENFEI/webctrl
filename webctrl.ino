@@ -6,19 +6,18 @@ HardwareSerial & esp8266 = Serial2;
 Servo sg92r,sg92;
 
 int current_position = 0;
-int current_position1 = 0;
+int current_position1 = 90;
 int vel = 10; 
 int minimum_position = 0; 
 int maximum_position = 180;
+int medium_position = 90;
 
 
 void setup()
 {
 sg92r.attach(sg92r_pin);
-sg92r.write(maximum_position);
 sg92r.detach();
 sg92.attach(sg92_pin);
-sg92.write(maximum_position);
 sg92.detach();
 Serial.begin(115200);
 esp8266.begin(115200);
@@ -102,10 +101,41 @@ delay(100/vel);
 }
 sg92.detach(); //dettach
 }
-
-
+if (command == "res") {
+  sg92r.attach(sg92r_pin);
+  while(current_position != minimum_position) {
+if (current_position > minimum_position) {
+  current_position -= 1;
+  sg92r.write(current_position);
+  delay(100/vel);
+}
+if (current_position < minimum_position) {
+  current_position += 1;
+  sg92r.write(current_position);
+  delay(100/vel);
 }
 }
+sg92r.detach(); //dettach
+
+  sg92.attach(sg92_pin); //attach servo
+while(current_position1 != medium_position) {
+if (current_position1 > medium_position) {
+  current_position1 -= 1;
+  sg92.write(current_position1);
+  delay(100/vel);
+}
+if (current_position1 < medium_position) {
+  current_position1 += 1;
+  sg92.write(current_position1);
+  delay(100/vel);
+}
+}
+sg92.detach(); //dettach
+}
+}
+
+}
+
 }
 
 
