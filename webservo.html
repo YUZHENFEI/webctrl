@@ -11,7 +11,7 @@
 <div style="margin: 0; width:500px; height:80px;">
 <form name="form" action="./webservo.html" method="GET">
 ESP8266 IP Address:
-<input type="text" name="inputbox" value="192.168.1.110">
+<input type="text" name="inputbox" value="192.168.1.109">
 </form>
 </div>
 <h3> Scroll it to move the servo1 in vertical direction </h3>
@@ -22,17 +22,27 @@ ESP8266 IP Address:
 $.ajaxSetup({timeout:1000});
 function servo1(angle)
 {
-	TextVar = form.inputbox.value;
-	ArduinoVar = "http://" + TextVar + ":80";
-	$.get( ArduinoVar, { "sr1": angle })	;
-	{Connection: close};
+TextVar = form.inputbox.value;
+ArduinoVar = "http://" + TextVar + ":80";
+$.get( ArduinoVar, { "sr1": angle })	;
+{Connection: close};
 }
 function servo2(angle)
 {
-	TextVar = form.inputbox.value;
-	ArduinoVar = "http://" + TextVar + ":80";
-	$.get( ArduinoVar, { "sr2": angle })	;
-	{Connection: close};
+TextVar = form.inputbox.value;
+ArduinoVar = "http://" + TextVar + ":80";
+$.get( ArduinoVar, { "sr2": angle })	;
+{Connection: close};
+}
+</script>
+<h3>Click to reset servos</h3>
+<button onclick=reset()>reset</button>
+<script>function servo1(angle)
+{
+TextVar = form.inputbox.value;
+ArduinoVar = "http://" + TextVar + ":80";
+$.get( ArduinoVar, { "res": "reset" })	;
+{Connection: close};
 }
 </script>
 </body>
